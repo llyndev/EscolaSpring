@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "aluno_table")
-public class Alunos {
+public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,9 @@ public class Alunos {
 
     private String endereco;
 
-    public Alunos() {}
+    public Aluno() {}
 
-    public Alunos(Long matricula, String cpf, String rg, String name) {
+    public Aluno(Long matricula, String cpf, String rg, String name) {
         this.matricula = matricula;
         this.cpf = cpf;
         this.rg = rg;
@@ -42,7 +42,7 @@ public class Alunos {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public void setEndereco(String endereco) {
