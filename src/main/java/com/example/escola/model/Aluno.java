@@ -1,6 +1,10 @@
 package com.example.escola.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "aluno_table")
@@ -18,15 +22,29 @@ public class Aluno {
 
     private String name;
 
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataDeNascimento;
+
     private String endereco;
 
     public Aluno() {}
 
-    public Aluno(Long matricula, String cpf, String rg, String name) {
+    public Aluno(Long matricula, String cpf, String rg, String name, LocalDate dataDeNascimento, String endereco) {
         this.matricula = matricula;
         this.cpf = cpf;
         this.rg = rg;
         this.name = name;
+        this.dataDeNascimento = dataDeNascimento;
+        this.endereco = endereco;
+    }
+
+    public LocalDate getDataDeNascimento() {
+        return dataDeNascimento;
+    }
+
+    public void setDataDeNascimento(LocalDate dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public void setMatricula(Long matricula) {

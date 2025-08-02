@@ -2,8 +2,10 @@ package com.example.escola.service;
 
 import com.example.escola.model.Aluno;
 import com.example.escola.repository.AlunoRepository;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,11 @@ public class AlunoService {
     // Listar por nome
     public List<Aluno> getByName(String name) {
         return alunoRepository.findByName(name);
+    }
+
+    // Listar por data
+    public List<Aluno> getByDate(@JsonFormat(pattern = "dd/MM/yyyy") LocalDate date) {
+        return alunoRepository.findByDate(date);
     }
 
     // Criar

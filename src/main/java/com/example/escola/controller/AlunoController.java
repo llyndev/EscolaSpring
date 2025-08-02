@@ -2,8 +2,10 @@ package com.example.escola.controller;
 
 import com.example.escola.model.Aluno;
 import com.example.escola.service.AlunoService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,11 @@ public class AlunoController {
     @GetMapping("/nome/{name}")
     public List<Aluno> getByName(@PathVariable String name) {
         return alunoService.getByName(name.toUpperCase());
+    }
+
+    @GetMapping("/data")
+    public List<Aluno> getByDate(@RequestParam("data") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date) {
+        return alunoService.getByDate(date);
     }
 
     @PostMapping

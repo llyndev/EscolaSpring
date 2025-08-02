@@ -1,6 +1,9 @@
 package com.example.escola.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "professores_table")
@@ -18,19 +21,31 @@ public class Professor {
 
     private String name;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataDeNascimento;
+
     private String licenciatura;
 
     private String endereco;
 
     public Professor() {}
 
-    public Professor(Long matricula, String cpf, String rg, String name, String licenciatura, String endereco) {
+    public Professor(Long matricula, String cpf, String rg, String name, LocalDate dataDeNascimento, String licenciatura, String endereco) {
         this.matricula = matricula;
         this.cpf = cpf;
         this.rg = rg;
         this.name = name;
+        this.dataDeNascimento = dataDeNascimento;
         this.licenciatura = licenciatura;
         this.endereco = endereco;
+    }
+
+    public LocalDate getDataDeNascimento() {
+        return dataDeNascimento;
+    }
+
+    public void setDataDeNascimento(LocalDate dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public void setMatricula(Long matricula) {
