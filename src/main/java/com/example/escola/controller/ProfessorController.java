@@ -2,8 +2,10 @@ package com.example.escola.controller;
 
 import com.example.escola.model.Professor;
 import com.example.escola.service.ProfessorService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,16 @@ public class ProfessorController {
     @GetMapping("/nome/{name}")
     public List<Professor> getByname(@PathVariable String name) {
         return professorService.getByName(name.toUpperCase());
+    }
+
+    @GetMapping("/materia/{licenciatura}")
+    public List<Professor> getByLicenciatura(@PathVariable String licenciatura){
+        return professorService.getByLicenciatura(licenciatura);
+    }
+
+    @GetMapping("/data")
+    public List<Professor> getByDate(@RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy")LocalDate date) {
+        return professorService.getByDate(date);
     }
 
     @PostMapping

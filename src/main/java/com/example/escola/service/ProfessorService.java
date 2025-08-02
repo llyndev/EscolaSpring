@@ -4,6 +4,7 @@ import com.example.escola.model.Professor;
 import com.example.escola.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,16 @@ public class ProfessorService {
     // Listar por nome
     public List<Professor> getByName(String name) {
         return professorRepository.findByName(name);
+    }
+
+    // Listar por licenciatura
+    public List<Professor> getByLicenciatura(String licenciatura) {
+        return professorRepository.findByLicenciatura(licenciatura);
+    }
+
+    // Listar por data de nascimento
+    public List<Professor> getByDate(LocalDate date) {
+        return professorRepository.finByDate(date);
     }
 
     // Criar
