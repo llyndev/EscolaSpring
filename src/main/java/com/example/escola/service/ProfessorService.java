@@ -42,6 +42,16 @@ public class ProfessorService {
         return professorRepository.finByDate(date);
     }
 
+    // Listar por cpf
+    public List<Professor> getByCpf(String cpf) {
+        return professorRepository.findByCpf(cpf);
+    }
+
+    // Listar por rg
+    public List<Professor> getByRg(String rg) {
+        return professorRepository.findByRg(rg);
+    }
+
     // Criar
     public Professor create(Professor professor) {
         return professorRepository.save(professor);
@@ -56,6 +66,5 @@ public class ProfessorService {
     public Professor save(Professor professor) {
         return professorRepository.save(professor);
     }
-
 
 }

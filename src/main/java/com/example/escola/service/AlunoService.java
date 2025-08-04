@@ -38,6 +38,16 @@ public class AlunoService {
         return alunoRepository.findByDate(date);
     }
 
+    // Listar por cpf
+    public List<Aluno> getByCpf(String cpf) {
+        return alunoRepository.findByCpf(cpf);
+    }
+
+    // Listar por rg
+    public List<Aluno> getByRg(String rg) {
+        return alunoRepository.findByRg(rg);
+    }
+
     // Criar
     public Aluno save(Aluno aluno) {
         return alunoRepository.save(aluno);
