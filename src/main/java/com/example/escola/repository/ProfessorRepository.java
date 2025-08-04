@@ -9,15 +9,14 @@ import java.util.List;
 
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
-    List<Professor> findByName(String name);
+    List<Professor> findByNomeContainingIgnoreCase(String nome);
 
     List<Professor> findByCpf(String cpf);
 
-    List<Professor> findByLicenciatura(String licenciatura);
     List<Professor> findByRg(String rg);
 
+    List<Professor> findByLicenciaturaContainingIgnoreCase (String licenciatura);
 
     @Query("SELECT e FROM Professor e WHERE e.dataDeNascimento = :data")
     List<Professor> finByDate(LocalDate date);
-
 }
