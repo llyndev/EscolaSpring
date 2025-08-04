@@ -30,7 +30,7 @@ public class AlunoService {
 
     // Listar por nome
     public List<Aluno> getByName(String name) {
-        return alunoRepository.findByName(name);
+        return alunoRepository.findByNomeContainsIgnoreCase(name);
     }
 
     // Listar por data
