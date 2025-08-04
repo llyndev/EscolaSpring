@@ -67,7 +67,7 @@ public class AlunoController {
 
         aluno.setCpf(alunoDetails.getCpf());
         aluno.setRg(alunoDetails.getRg());
-        aluno.setName(alunoDetails.getName());
+        aluno.setNome(alunoDetails.getNome());
         aluno.setEndereco(alunoDetails.getEndereco());
 
         return alunoService.save(aluno);

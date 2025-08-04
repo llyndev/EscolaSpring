@@ -71,7 +71,7 @@ public class ProfessorController {
 
         professor.setCpf(professorDetails.getCpf());
         professor.setRg(professorDetails.getRg());
-        professor.setName(professorDetails.getName());
+        professor.setNome(professorDetails.getNome());
         professor.setLicenciatura(professorDetails.getLicenciatura());
         professor.setEndereco(professorDetails.getEndereco());
 
