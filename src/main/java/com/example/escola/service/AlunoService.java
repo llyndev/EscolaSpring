@@ -57,9 +57,4 @@ public class AlunoService {
     public void delete(Long matricula) {
         alunoRepository.deleteById(matricula);
     }
-
-    // Atualizar
-    public Aluno update(Long matricula, Aluno aluno) {
-        return alunoRepository.save(aluno);
-    }
 }
