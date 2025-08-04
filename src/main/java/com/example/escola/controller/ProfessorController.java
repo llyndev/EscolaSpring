@@ -24,19 +24,19 @@ public class ProfessorController {
         return professorService.getAll();
     }
 
-    @GetMapping("/{matricula}")
-    public Optional<Professor> getByid(@PathVariable Long matricula) {
+    @GetMapping("/matricula")
+    public Optional<Professor> getByid(@RequestParam Long matricula) {
         return professorService.getByid(matricula);
     }
 
-    @GetMapping("/nome/{name}")
-    public List<Professor> getByname(@PathVariable String name) {
-        return professorService.getByName(name.toUpperCase());
+    @GetMapping("/nome")
+    public List<Professor> getByname(@RequestParam String nome) {
+        return professorService.getByName(nome.toUpperCase());
     }
 
-    @GetMapping("/materia/{licenciatura}")
-    public List<Professor> getByLicenciatura(@PathVariable String licenciatura){
-        return professorService.getByLicenciatura(licenciatura);
+    @GetMapping("/materia")
+    public List<Professor> getByLicenciatura(@RequestParam String licenciatura){
+        return professorService.getByLicenciatura(licenciatura.toUpperCase());
     }
 
     @GetMapping("/data")
@@ -49,13 +49,13 @@ public class ProfessorController {
         return professorService.create(professor);
     }
 
-    @DeleteMapping("/{matricula}")
-    public void delete(@PathVariable Long matricula) {
+    @DeleteMapping("/matricula")
+    public void delete(@RequestParam Long matricula) {
         professorService.delete(matricula);
     }
 
-    @PutMapping("/{matricula}")
-    public Professor update(@PathVariable Long matricula, Professor professorDetails) {
+    @PutMapping("/matricula")
+    public Professor update(@RequestParam Long matricula, Professor professorDetails) {
         Professor professor = professorService.getByid(matricula)
                 .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
 

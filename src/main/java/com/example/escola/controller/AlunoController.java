@@ -25,14 +25,14 @@ public class AlunoController {
         return alunoService.getAll();
     }
 
-    @GetMapping("/{matricula}")
-    public Optional<Aluno> getByid(@PathVariable Long matricula) {
+    @GetMapping("/matricula")
+    public Optional<Aluno> getByid(@RequestParam Long matricula) {
         return alunoService.getByid(matricula);
     }
 
-    @GetMapping("/nome/{name}")
-    public List<Aluno> getByName(@PathVariable String name) {
-        return alunoService.getByName(name.toUpperCase());
+    @GetMapping("/nome")
+    public List<Aluno> getByName(@RequestParam String nome) {
+        return alunoService.getByName(nome.toUpperCase());
     }
 
     @GetMapping("/data")
@@ -55,13 +55,13 @@ public class AlunoController {
         return alunoService.save(aluno);
     }
 
-    @DeleteMapping("/{matricula}")
-    public void delete(@PathVariable Long matricula) {
+    @DeleteMapping("/matricula")
+    public void delete(@RequestParam Long matricula) {
         alunoService.delete(matricula);
     }
 
-    @PutMapping("/{matricula}")
-    public Aluno update(@PathVariable Long matricula, @RequestBody Aluno alunoDetails) {
+    @PutMapping("/matricula")
+    public Aluno update(@RequestParam Long matricula, @RequestBody Aluno alunoDetails) {
         Aluno aluno = alunoService.getByid(matricula)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
