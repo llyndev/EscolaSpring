@@ -44,6 +44,16 @@ public class ProfessorController {
         return professorService.getByDate(date);
     }
 
+    @GetMapping("/cpf")
+    public List<Professor> getByCpf(@RequestParam String cpf) {
+        return professorService.getByCpf(cpf);
+    }
+
+    @GetMapping("/rg")
+    public List<Professor> getByRg(@RequestParam String rg) {
+        return professorService.getByCpf(rg);
+    }
+
     @PostMapping
     public Professor create(@RequestBody Professor professor) {
         return professorService.create(professor);
