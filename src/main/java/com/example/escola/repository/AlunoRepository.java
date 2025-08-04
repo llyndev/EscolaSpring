@@ -11,6 +11,10 @@ import java.util.List;
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     List<Aluno> findByName(String name);
 
+    List<Aluno> findByCpf(String cpf);
+
+    List<Aluno> findByRg(String rg);
+
     @Query("SELECT e FROM Aluno e WHERE e.dataDeNascimento = :data")
     List<Aluno> findByDate(@Param("data") LocalDate date);
 }
