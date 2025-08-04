@@ -19,7 +19,7 @@ public class Professor {
     @Column(length = 15, nullable = false, unique = true)
     private String rg;
 
-    private String name;
+    private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDeNascimento;
@@ -30,11 +30,11 @@ public class Professor {
 
     public Professor() {}
 
-    public Professor(Long matricula, String cpf, String rg, String name, LocalDate dataDeNascimento, String licenciatura, String endereco) {
+    public Professor(Long matricula, String cpf, String rg, String nome, LocalDate dataDeNascimento, String licenciatura, String endereco) {
         this.matricula = matricula;
         this.cpf = cpf;
         this.rg = rg;
-        this.name = name;
+        this.nome = nome;
         this.dataDeNascimento = dataDeNascimento;
         this.licenciatura = licenciatura;
         this.endereco = endereco;
@@ -60,12 +60,12 @@ public class Professor {
         this.rg = rg;
     }
 
-    public void setName(String name) {
-        this.name = name.toUpperCase();
+    public void setNome(String nome) {
+        this.nome = nome.toUpperCase();
     }
 
     public void setLicenciatura(String licenciatura) {
-        this.licenciatura = licenciatura;
+        this.licenciatura = licenciatura.toUpperCase();
     }
 
     public void setEndereco(String endereco) {
@@ -84,8 +84,8 @@ public class Professor {
         return rg;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
     public String getLicenciatura() {

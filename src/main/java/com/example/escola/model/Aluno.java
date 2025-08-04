@@ -20,7 +20,7 @@ public class Aluno {
     @Column(length = 15, nullable = false, unique = true)
     private String rg;
 
-    private String name;
+    private String nome;
 
     //@DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -30,11 +30,11 @@ public class Aluno {
 
     public Aluno() {}
 
-    public Aluno(Long matricula, String cpf, String rg, String name, LocalDate dataDeNascimento, String endereco) {
+    public Aluno(Long matricula, String cpf, String rg, String nome, LocalDate dataDeNascimento, String endereco) {
         this.matricula = matricula;
         this.cpf = cpf;
         this.rg = rg;
-        this.name = name;
+        this.nome = nome;
         this.dataDeNascimento = dataDeNascimento;
         this.endereco = endereco;
     }
@@ -59,8 +59,8 @@ public class Aluno {
         this.rg = rg;
     }
 
-    public void setName(String name) {
-        this.name = name.toUpperCase();
+    public void setNome(String nome) {
+        this.nome = nome.toUpperCase();
     }
 
     public void setEndereco(String endereco) {
@@ -79,8 +79,8 @@ public class Aluno {
         return rg;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
     public String getEndereco() {
