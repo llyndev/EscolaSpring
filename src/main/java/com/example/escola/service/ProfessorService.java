@@ -29,12 +29,12 @@ public class ProfessorService {
 
     // Listar por nome
     public List<Professor> getByName(String name) {
-        return professorRepository.findByName(name);
+        return professorRepository.findByNomeContainingIgnoreCase(name);
     }
 
     // Listar por licenciatura
     public List<Professor> getByLicenciatura(String licenciatura) {
-        return professorRepository.findByLicenciatura(licenciatura);
+        return professorRepository.findByLicenciaturaContainingIgnoreCase(licenciatura);
     }
 
     // Listar por data de nascimento
