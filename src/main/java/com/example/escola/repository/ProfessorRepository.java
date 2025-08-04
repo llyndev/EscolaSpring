@@ -11,7 +11,11 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
     List<Professor> findByName(String name);
 
+    List<Professor> findByCpf(String cpf);
+
     List<Professor> findByLicenciatura(String licenciatura);
+    List<Professor> findByRg(String rg);
+
 
     @Query("SELECT e FROM Professor e WHERE e.dataDeNascimento = :data")
     List<Professor> finByDate(LocalDate date);
