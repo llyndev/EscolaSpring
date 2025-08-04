@@ -9,7 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
-    List<Aluno> findByName(String name);
+
+    List<Aluno> findByNomeContainsIgnoreCase(String nome);
 
     List<Aluno> findByCpf(String cpf);
 
