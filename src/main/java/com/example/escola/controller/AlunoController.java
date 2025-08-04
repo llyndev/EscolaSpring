@@ -40,6 +40,16 @@ public class AlunoController {
         return alunoService.getByDate(date);
     }
 
+    @GetMapping("/cpf")
+    public List<Aluno> getByCpf(@RequestParam String cpf) {
+        return alunoService.getByCpf(cpf);
+    }
+
+    @GetMapping("/rg")
+    public List<Aluno> getByRg(@RequestParam String rg) {
+        return alunoService.getByRg(rg);
+    }
+
     @PostMapping
     public Aluno create(@RequestBody Aluno aluno) {
         return alunoService.save(aluno);
