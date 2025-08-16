@@ -13,6 +13,7 @@ Atualmente utiliza o **banco de dados H2 em memória** (acessível via console) 
 - Spring Boot
 - Spring Web
 - Spring Data JPA
+- Lombok
 - Banco de dados H2
 - Maven
 
@@ -57,7 +58,16 @@ Atualmente utiliza o **banco de dados H2 em memória** (acessível via console) 
     "rg": 123456789012345,
     "name": "Exemplo",
     "dataDeNascimento": "10/10/2001",
-    "endereco": "Rua Exemplo, 123"
+    "endereco": {
+      "logradouro": "Avenida São João",
+      "numero": "432",
+      "complemento": "Bloco A, Apt 502",
+      "bairro": "Jardim das Flores",
+      "cidade": "Campinas",
+      "estado": "SP",
+      "cep": "13084-445",
+      "pais": "Brasil"
+    }
 } 
 ```
 
@@ -91,13 +101,22 @@ Atualmente utiliza o **banco de dados H2 em memória** (acessível via console) 
     "name": "Exemplo",
     "dataDeNascimento": "10/10/2001",
     "licenciatura": "Inglês",
-    "endereco": "Rua Exemplo, 456"
+    "endereco": {
+      "logradouro": "Avenida São João",
+      "numero": "432",
+      "complemento": "Bloco A, Apt 502",
+      "bairro": "Jardim das Flores",
+      "cidade": "Campinas",
+      "estado": "SP",
+      "cep": "13084-445",
+      "pais": "Brasil"
+  }
 } 
 ```
 
 ## Próximos passos
 
-- [ ] Criar interface web com Spring MVC ou React  
+- [ ] Criar interface web com Spring MVC ou React
 - [ ] Adicionar testes unitários e de integração  
 - [ ] Implementar autenticação (JWT ou Spring Security)  
 - [ ] Persistência com banco relacional real (PostgreSQL ou MySQL)
