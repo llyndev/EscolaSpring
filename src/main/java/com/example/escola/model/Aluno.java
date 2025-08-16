@@ -2,10 +2,18 @@ package com.example.escola.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "aluno_table")
+@Builder
 @Entity
 @Table(name = "aluno_table")
 public class Aluno {

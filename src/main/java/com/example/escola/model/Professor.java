@@ -2,9 +2,16 @@ package com.example.escola.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "professores_table")
+@Builder
 @Entity
 @Table(name = "professores_table")
 public class Professor {
