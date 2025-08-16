@@ -1,13 +1,14 @@
 package com.example.escola.controller;
 
+import com.example.escola.dto.AlunoDTO;
 import com.example.escola.model.Aluno;
 import com.example.escola.service.AlunoService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/alunos")
@@ -21,33 +22,35 @@ public class AlunoController {
     }
 
     @GetMapping
-    public List<Aluno> getAll() {
+    public List<AlunoDTO> getAll() {
         return alunoService.getAll();
     }
 
     @GetMapping("/matricula")
-    public Optional<Aluno> getByid(@RequestParam Long matricula) {
-        return alunoService.getByid(matricula);
+    public ResponseEntity<AlunoDTO> getByid(@RequestParam Long matricula) {
+        return ResponseEntity.ok(alunoService.getByid(matricula));
     }
 
     @GetMapping("/nome")
-    public List<Aluno> getByName(@RequestParam String nome) {
-        return alunoService.getByName(nome.toUpperCase());
+    public ResponseEntity<List<AlunoDTO>> getByName(@RequestParam String nome) {
+        List<AlunoDTO> aluno = alunoService.getByName(nome.toUpperCase());
+        return ResponseEntity.ok(aluno);
     }
 
     @GetMapping("/data")
-    public List<Aluno> getByDate(@RequestParam("data") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date) {
-        return alunoService.getByDate(date);
+    public ResponseEntity<List<AlunoDTO>> getByDate(@RequestParam("data") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date) {
+        List<AlunoDTO> aluno = alunoService.getByDate(date);
+        return ResponseEntity.ok(aluno);
     }
 
     @GetMapping("/cpf")
-    public List<Aluno> getByCpf(@RequestParam String cpf) {
-        return alunoService.getByCpf(cpf);
+    public ResponseEntity<AlunoDTO> getByCpf(@RequestParam String cpf) {
+        return ResponseEntity.ok(alunoService.getByCpf(cpf));
     }
 
     @GetMapping("/rg")
-    public List<Aluno> getByRg(@RequestParam String rg) {
-        return alunoService.getByRg(rg);
+    public ResponseEntity<AlunoDTO> getByRg(@RequestParam String rg) {
+        return ResponseEntity.ok(alunoService.getByRg(rg));
     }
 
     @PostMapping
@@ -61,17 +64,9 @@ public class AlunoController {
     }
 
     @PutMapping("/matricula")
-    public Aluno update(@RequestParam Long matricula, @RequestBody Aluno alunoDetails) {
-        Aluno aluno = alunoService.getByid(matricula)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
-
-        aluno.setCpf(alunoDetails.getCpf());
-        aluno.setRg(alunoDetails.getRg());
-        aluno.setNome(alunoDetails.getNome());
-        aluno.setEndereco(alunoDetails.getEndereco());
-
-        return alunoService.save(aluno);
-
+    public ResponseEntity<Void> update(@RequestParam Long matricula, @RequestBody Aluno alunoDetails) {
+        alunoService.update(matricula, alunoDetails);
+        return ResponseEntity.ok().build();
     }
 
 
