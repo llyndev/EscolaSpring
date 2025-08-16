@@ -6,14 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
     List<Professor> findByNomeContainingIgnoreCase(String nome);
 
-    List<Professor> findByCpf(String cpf);
+    Optional<Professor> findByCpf(String cpf);
 
-    List<Professor> findByRg(String rg);
+    Optional<Professor> findByRg(String rg);
 
     List<Professor> findByLicenciaturaContainingIgnoreCase (String licenciatura);
 

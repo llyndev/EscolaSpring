@@ -7,14 +7,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     List<Aluno> findByNomeContainsIgnoreCase(String nome);
 
-    List<Aluno> findByCpf(String cpf);
+    Optional<Aluno> findByCpf(String cpf);
 
-    List<Aluno> findByRg(String rg);
+    Optional<Aluno> findByRg(String rg);
 
     @Query("SELECT e FROM Aluno e WHERE e.dataDeNascimento = :data")
     List<Aluno> findByDate(@Param("data") LocalDate date);
