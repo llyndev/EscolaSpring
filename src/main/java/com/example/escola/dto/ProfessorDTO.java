@@ -3,6 +3,7 @@ package com.example.escola.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -11,10 +12,11 @@ import java.time.LocalDate;
 @Builder
 public class ProfessorDTO {
 
-    private Long matricula;
+    private Long id;
+    private String matricula;
     private String nome;
-    private LocalDate dataDenascimento;
-    private String licenciatura;
+    private LocalDate dataDeNascimento;
     private String telefone;
     private EnderecoDTO endereco;
+    private Set<String> disciplinaNome;
 }

@@ -11,9 +11,13 @@ import java.time.LocalDate;
 @Builder
 public class AlunoDTO {
 
-    private Long matricula;
+    private Long id;
+    private String matricula;
     private String nome;
-    private LocalDate dataDenascimento;
+    private LocalDate dataDeNascimento;
     private String telefone;
     private EnderecoDTO endereco;
+    private String serieNome;
+    private String serieSala;
+    private String serieTurno;
 }
