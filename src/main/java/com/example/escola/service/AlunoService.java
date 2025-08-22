@@ -1,16 +1,18 @@
 package com.example.escola.service;
 
 import com.example.escola.dto.AlunoDTO;
+import com.example.escola.dto.AlunoRequest;
 import com.example.escola.mapper.AlunoMapper;
 import com.example.escola.model.Aluno;
+import com.example.escola.model.Serie;
 import com.example.escola.repository.AlunoRepository;
+import com.example.escola.repository.SerieRepository;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,8 +20,9 @@ public class AlunoService {
 
     private final AlunoRepository alunoRepository;
     private final AlunoMapper alunoMapper;
+    private final SerieRepository serieRepository;
 
-    // Listar
+    // Retorna todos os alunos
     public List<AlunoDTO> getAll() {
         List<Aluno> aluno = alunoRepository.findAll();
 
@@ -28,17 +31,41 @@ public class AlunoService {
                 .toList();
     }
 
-    // Listar por id
-    public AlunoDTO getByid(Long matricula) {
+    // Retorna o aluno pelo ID ou lança RuntimeException se não encontrado
+    public AlunoDTO getByid(Long id) {
 
-        return alunoRepository.findById(matricula)
+        return alunoRepository.findById(id)
                 .map(alunoMapper::toDTO)
                 .orElseThrow(
                 () -> new RuntimeException("Aluno não encontrado.")
         );
     }
 
-    // Listar por nome
+    // Retorna aluno que esta em uma serie pelo nome dela
+    public List<AlunoDTO> getBySerieNome(String serieNome) {
+        List<Aluno> aluno = alunoRepository.findBySerieNomeContainsIgnoreCase(serieNome);
+        return aluno.stream()
+                .map(alunoMapper::toDTO)
+                .toList();
+    }
+
+    // Retorna aluno que esta em uma serie pelo ID dela
+    public List<AlunoDTO> getBySerieId(Long serieId) {
+        List<Aluno> aluno = alunoRepository.findBySerieId(serieId);
+        return aluno.stream()
+                .map(alunoMapper::toDTO)
+                .toList();
+    }
+
+    // Retorna um aluno pela matricula ou lança RuntimeException se não encontrado
+    public AlunoDTO getByMatricula(String matricula) {
+
+        return alunoRepository.findByMatriculaContainingIgnoreCase(matricula)
+                .map(alunoMapper::toDTO)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+    }
+
+    // Retorna aluno pelo nome
     public List<AlunoDTO> getByName(String name) {
         List<Aluno> aluno = alunoRepository.findByNomeContainsIgnoreCase(name);
 
@@ -47,7 +74,7 @@ public class AlunoService {
                 .toList();
     }
 
-    // Listar por data
+    // Retorna aluno pela data de nascimento
     public List<AlunoDTO> getByDate(@JsonFormat(pattern = "dd/MM/yyyy") LocalDate date) {
         List<Aluno> aluno = alunoRepository.findByDate(date);
 
@@ -56,7 +83,7 @@ public class AlunoService {
                 .toList();
     }
 
-    // Listar por cpf
+    // Retorna aluno pelo CPF
     public AlunoDTO getByCpf(String cpf) {
 
         Aluno aluno = alunoRepository.findByCpf(cpf).orElseThrow(
@@ -65,7 +92,7 @@ public class AlunoService {
         return alunoMapper.toDTO(aluno);
     }
 
-    // Listar por rg
+    // Retorna aluno pelo RG
     public AlunoDTO getByRg(String rg) {
         Aluno aluno = alunoRepository.findByRg(rg).orElseThrow(
                 () -> new RuntimeException("RG não encontrado")
@@ -74,21 +101,35 @@ public class AlunoService {
 
     }
 
-    // Criar
-    public Aluno save(Aluno aluno) {
-        return alunoRepository.save(aluno);
+    // Criar aluno
+    public AlunoDTO save(AlunoRequest alunoRequest) {
+        Serie serie = serieRepository.findById(alunoRequest.getSerieId()).orElseThrow( () -> new RuntimeException("Serie não encontrada"));
+
+        Aluno aluno = alunoMapper.toEntity(alunoRequest);
+        aluno.setSerie(serie);
+
+        aluno = alunoRepository.save(aluno);
+
+        return alunoMapper.toDTO(aluno);
     }
 
-    // Deletar
-    public void delete(Long matricula) {
-        alunoRepository.deleteById(matricula);
+    // Deletar aluno pelo ID
+    public void delete(Long id) {
+        alunoRepository.deleteById(id);
     }
 
-    // Atualizar
-    public void update(Long matricula, Aluno aluno) {
-        Aluno alunoEntity = alunoRepository.findById(matricula).orElseThrow(() ->
+    // Deletar aluno pela matricula
+    public void deleteByMatricula(String matricula) {
+        alunoRepository.deleteByMatricula(matricula);
+    }
+
+    // Atualizar aluno pela matricula
+    public void update(String matricula, Aluno aluno) {
+        Aluno alunoEntity = alunoRepository.findByMatriculaContainingIgnoreCase(matricula).orElseThrow(() ->
                 new RuntimeException("Aluno não encontrado"));
+
         Aluno alunoAtualiado = Aluno.builder()
+
                 .cpf(aluno.getCpf() != null ? aluno.getCpf() :
                         alunoEntity.getCpf())
                 .rg(aluno.getRg() != null ? aluno.getRg() :
@@ -102,6 +143,7 @@ public class AlunoService {
                 .endereco(aluno.getEndereco() != null ? aluno.getEndereco() :
                         alunoEntity.getEndereco())
                 .matricula(alunoEntity.getMatricula())
+                .id(alunoEntity.getId())
                 .build();
         alunoRepository.saveAndFlush(alunoAtualiado);
     }
