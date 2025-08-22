@@ -17,7 +17,10 @@ public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long matricula;
+    private Long id;
+
+    @Column(name = "matricula", nullable = false, unique = true)
+    private String matricula;
 
     @Column(name = "cpf", length = 11, nullable = false, unique = true)
     private String cpf;
@@ -39,7 +42,13 @@ public class Aluno {
     @Column(name = "endereco")
     private Endereco endereco;
 
+    @ManyToOne
+    @JoinColumn(name = "serie_id")
+    private Serie serie;
+
     public void setNome(String nome) {
         this.nome = nome.toUpperCase();
     }
+
+    public void setMatricula(String matricula) {this.matricula = matricula.toUpperCase();}
 }

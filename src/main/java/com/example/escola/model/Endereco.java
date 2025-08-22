@@ -2,12 +2,16 @@ package com.example.escola.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Embeddable
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Endereco {
 
     @Column(name = "end_logradouro", nullable = false)
@@ -33,4 +37,5 @@ public class Endereco {
 
     @Column(name = "end_pais", nullable = false)
     private String pais;
+
 }

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +19,10 @@ public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long matricula;
+    private Long id;
+
+    @Column(name = "matricula", nullable = false, unique = true)
+    private String matricula;
 
     @Column(name = "cpf", length = 11, nullable = false, unique = true)
     private String cpf;
@@ -32,9 +37,6 @@ public class Professor {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDeNascimento;
 
-    @Column(name = "licenciatura")
-    private String licenciatura;
-
     @Column(name = "telefone")
     private String telefone;
 
@@ -42,11 +44,17 @@ public class Professor {
     @Column(name = "endereco")
     private Endereco endereco;
 
+    @ManyToMany
+    @JoinTable(
+            name = "professor_disciplina",
+            joinColumns = @JoinColumn(name = "professor_id"),
+            inverseJoinColumns = @JoinColumn(name = "disciplina_id")
+    )
+    private Set<Disciplina> disciplinas = new HashSet<>();
+
     public void setNome(String nome) {
         this.nome = nome.toUpperCase();
     }
 
-    public void setLicenciatura(String licenciatura) {
-        this.licenciatura = licenciatura.toUpperCase();
-    }
+    public void setMatricula(String matricula) {this.matricula = matricula.toUpperCase();}
 }
