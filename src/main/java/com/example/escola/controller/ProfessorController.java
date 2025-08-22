@@ -1,76 +1,105 @@
 package com.example.escola.controller;
 
 import com.example.escola.dto.ProfessorDTO;
+import com.example.escola.dto.ProfessorRequest;
+import com.example.escola.model.Disciplina;
 import com.example.escola.model.Professor;
 import com.example.escola.service.ProfessorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/professor")
+@RequiredArgsConstructor
 public class ProfessorController {
 
+    // Injeção de dependência
     private final ProfessorService professorService;
 
-    public ProfessorController(ProfessorService professorService) {
-        this.professorService = professorService;
+    // Metodo post para criar professor
+    @PostMapping
+    public ResponseEntity<ProfessorDTO> create(@RequestBody ProfessorRequest professorRequest) {
+        ProfessorDTO professorDTO = professorService.save(professorRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(professorDTO);
     }
 
+    // Metodos GET para retornar a lista de todos os professores
     @GetMapping
     public List<ProfessorDTO> getAll() {
         return professorService.getAll();
     }
 
-    @GetMapping("/matricula")
-    public ResponseEntity<ProfessorDTO> getByid(@RequestParam Long matricula) {
-        return ResponseEntity.ok(professorService.getByid(matricula));
+    // Metodo GET para retornar professor por ID
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ProfessorDTO> getByid(@PathVariable Long id) {
+        return ResponseEntity.ok(professorService.getByid(id));
     }
 
+    // Metodo GET para retornar professor por matricula
+    @GetMapping("/matricula/{matricula}")
+    public ResponseEntity<ProfessorDTO> getByMatricula(@PathVariable String matricula) {
+        return ResponseEntity.ok(professorService.getByMatricula(matricula));
+    }
+
+    // Metodo GET para retornar lista de professores pelo nome
     @GetMapping("/nome")
-    public ResponseEntity<List<ProfessorDTO>> getByname(@RequestParam String nome) {
-        List<ProfessorDTO> professor = professorService.getByName(nome.toUpperCase());
-        return ResponseEntity.ok(professor);
+    public List<ProfessorDTO> getByname(@RequestParam String nome) {
+        return professorService.getByName(nome);
     }
 
-    @GetMapping("/materia")
-    public ResponseEntity<List<ProfessorDTO>> getByLicenciatura(@RequestParam String licenciatura){
-        List<ProfessorDTO> professor = professorService.getByLicenciatura(licenciatura.toUpperCase());
-        return ResponseEntity.ok(professor);
-    }
-
+    // Metodo GET para retornar lista de professores por data de nascimento
     @GetMapping("/data")
-    public ResponseEntity<List<ProfessorDTO>> getByDate(@RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy")LocalDate date) {
-        List<ProfessorDTO> professor = professorService.getByDate(date);
-        return ResponseEntity.ok(professor);
+    public List<ProfessorDTO> getByDate(@RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy")LocalDate date) {
+        return professorService.getByDate(date);
     }
 
-    @GetMapping("/cpf")
-    public ResponseEntity<ProfessorDTO> getByCpf(@RequestParam String cpf) {
+    // Metodo GET para retornar professor por CPF
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<ProfessorDTO> getByCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(professorService.getByCpf(cpf));
     }
 
-    @GetMapping("/rg")
-    public ResponseEntity<ProfessorDTO> getByRg(@RequestParam String rg) {
-        return ResponseEntity.ok(professorService.getByCpf(rg));
+    // Metodo GET para retornar professor por RG
+    @GetMapping("/rg/{rg}")
+    public ResponseEntity<ProfessorDTO> getByRG(@PathVariable String rg) {
+        return ResponseEntity.ok(professorService.getByRg(rg));
     }
 
-    @PostMapping
-    public Professor create(@RequestBody Professor professor) {
-        return professorService.create(professor);
+    // Metodo GET para retornar professores por ID de uma disciplina
+    @GetMapping("/disciplina/id")
+    public List<ProfessorDTO> getByDisciplinaId(@RequestParam Long disciplinasId){
+        return professorService.getByDisciplinasId(disciplinasId);
     }
 
-    @DeleteMapping("/matricula")
-    public void delete(@RequestParam Long matricula) {
-        professorService.delete(matricula);
+    // Metodo GET para retornar professores por nome de uma disciplina
+    @GetMapping("/disciplina/nome")
+    public List<ProfessorDTO> getByDisciplinasNome(@RequestParam String disciplinaNome) {
+        return professorService.getByDisciplinaNome(disciplinaNome);
     }
 
-    @PutMapping("/matricula")
-    public ResponseEntity<Void> update(@RequestParam Long matricula, Professor professorDetails) {
+    // Metodo delete por id da entidade professor
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        professorService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    // Metodo delete pela matricula do professor
+    @DeleteMapping("/matricula/{matricula}")
+    public ResponseEntity<Void> deleteByMatricula(@PathVariable String matricula) {
+        professorService.deleteByMatricula(matricula);
+        return ResponseEntity.ok().build();
+    }
+
+    // Metodo para atualizar professor pela matricula
+    @PutMapping("/matricula/{matricula}")
+    public ResponseEntity<Void> update(@PathVariable String matricula, @RequestBody Professor professorDetails) {
         professorService.update(matricula, professorDetails);
         return ResponseEntity.ok().build();
     }
