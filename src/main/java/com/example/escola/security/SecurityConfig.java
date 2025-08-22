@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +20,8 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
 
+    // Define o gerenciador de autenticação
+    // Utilizando UserDetailsService e PasswordEncoder para validar credenciais
     @Bean
     public AuthenticationManager authenticationManager(
             UserDetailsService userDetailsService,
@@ -32,11 +33,13 @@ public class SecurityConfig {
         return new ProviderManager(authProvider);
     }
 
+    // Define o algoritmo de criptografia de senhas
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // Configura a cadeia de filtros de segurança (SecurityFilterChain).
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -48,10 +51,11 @@ public class SecurityConfig {
                         .requestMatchers("/alunos/**").authenticated()
                         .requestMatchers("/professor/**").authenticated()
                         .requestMatchers("/serie/**").authenticated()
+                        .requestMatchers("/disciplina/**").authenticated()
 
                         .anyRequest().authenticated()
                 )
-                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
 

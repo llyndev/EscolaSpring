@@ -16,10 +16,10 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
-
+    // Metodo para cadastrar um novo usuário verificando email e senha
     public Usuario cadastrar(UsuarioDTO dto) {
         if (!dto.getSenha().equals(dto.getConfirmarSenha())) {
-            throw new IllegalArgumentException("Senhas não conferem");
+            throw new IllegalArgumentException("Credencial inválida");
         }
 
         if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
@@ -33,9 +33,5 @@ public class UsuarioService {
                 .build();
 
         return usuarioRepository.save(usuario);
-    }
-
-    public Optional<Usuario> buscarPorEmail(String email) {
-        return usuarioRepository.findByEmail(email);
     }
 }

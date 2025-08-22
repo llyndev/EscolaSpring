@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
+    // Injeção de dependência
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
+    // Metodo POST para registrar um novo usuario
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UsuarioDTO usuarioDTO) {
         try {
@@ -34,6 +36,7 @@ public class AuthController {
         }
     }
 
+    // Metodo POST para logar usuario
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
         try {
